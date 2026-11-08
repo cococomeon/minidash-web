@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel to Dashboard — Excel 另存为 CSV 后一键生成经营日报（免费、零安装）</title>
+<meta name="description" content="Excel to Dashboard：把 .xlsx 另存为 CSV（UTF-8），拖进页面立刻生成经营日报卡——本周销售额、订单数、退款率、环比、近 7 天柱状图，可导出 1080×1440 PNG。纯浏览器计算，数据不上传。附 Excel / Numbers / WPS / Google Sheets 的另存步骤与常见坑。">
+<link rel="canonical" href="https://cococomeon.github.io/minidash-web/excel.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#070b16">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MiniDash">
+<meta property="og:title" content="Excel to Dashboard — Excel 另存 CSV 生成经营日报">
+<meta property="og:description" content="Excel to Dashboard：把 .xlsx 另存为 CSV（UTF-8），拖进页面立刻生成经营日报卡——本周销售额、订单数、退款率、环比、近 7 天柱状图，可导出 1080×1440 PNG。纯浏览器计算，数据不上传。附 Excel / Numbers / WPS / Google Sheets 的另存步骤与常见坑。">
+<meta property="og:url" content="https://cococomeon.github.io/minidash-web/excel.html">
+<meta property="og:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1440">
+<meta property="og:image:alt" content="MiniDash 生成的经营日报卡示例：本周销售额、订单数、退款率、单日最高退款率与近 7 天柱状图">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Excel to Dashboard — Excel 另存 CSV 生成经营日报">
+<meta name="twitter:description" content="Excel to Dashboard：把 .xlsx 另存为 CSV（UTF-8），拖进页面立刻生成经营日报卡——本周销售额、订单数、退款率、环比、近 7 天柱状图，可导出 1080×1440 PNG。纯浏览器计算，数据不上传。附 Excel / Numbers / WPS / Google Sheets 的另存步骤与常见坑。">
+<meta name="twitter:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1224'/%3E%3Crect x='14' y='34' width='8' height='16' rx='3' fill='%237c9cff'/%3E%3Crect x='28' y='24' width='8' height='26' rx='3' fill='%235eead4'/%3E%3Crect x='42' y='16' width='8' height='34' rx='3' fill='%237c9cff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MiniDash — Excel to Dashboard","applicationCategory":"BusinessApplication","applicationSubCategory":"Sales Analytics","operatingSystem":"Any modern browser (Chrome, Safari, Firefox, Edge)","url":"https://cococomeon.github.io/minidash-web/excel.html","description":"把 Excel 表格另存为 CSV 后，在浏览器里一键生成经营日报卡：KPI、异常预警、近 7 天柱状图，导出 PNG 与文字日报。","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"featureList":["CSV 上传后自动识别日期 / 渠道 / 订单数 / 销售额 / 退款额列","生成本周销售额、订单数、退款率、单日最高退款率、环比","退款率 5% / 单日 10% / 环比 -30% 三条异常预警","导出 1080×1440 PNG 分享卡片","一键复制文字版日报","全部计算在浏览器本地完成，数据不上传"],"screenshot":"https://cococomeon.github.io/minidash-web/assets/preview.png","image":"https://cococomeon.github.io/minidash-web/assets/preview.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"能不能直接上传 .xlsx？","acceptedAnswer":{"@type":"Answer","text":"不能。本工具是纯前端单页，没有后端，也不引入第三方库，所以不解析 Excel 二进制格式。检测到 Excel 文件时页面会明确告诉你「目前支持 CSV，Excel 请在表格软件里另存为 CSV」，并给出 Excel / WPS / Numbers / Google Sheets 的四条操作步骤。"}},{"@type":"Question","name":"另存 CSV 会丢格式吗？","acceptedAnswer":{"@type":"Answer","text":"会丢颜色、公式和图表，但你做日报只需要值——日期、渠道、订单数、金额、退款。这些数字不会丢。如果某些单元格是公式，CSV 里存的是计算结果。"}},{"@type":"Question","name":"Excel 里有多张表怎么办？","acceptedAnswer":{"@type":"Answer","text":"CSV 只能装一张表。把要做日报的那张表单独「另存为」，或者分别导出后用文本编辑器把数据行拼起来（保留一份表头）。"}},{"@type":"Question","name":"中文乱码怎么处理？","acceptedAnswer":{"@type":"Answer","text":"先试试直接上传：本工具按 UTF-8 解码，发现替换字符会自动回退到 GBK 再解一次。仍然乱码时，回 Excel 用「CSV UTF-8（逗号分隔）」重新导出。"}},{"@type":"Question","name":"上传后没有任何反应？","acceptedAnswer":{"@type":"Answer","text":"检查三件事：文件是不是 0 字节；第一行是不是表头；是不是至少有一列日期和一列金额。这几种情况页面都会给出具体的中文提示，不会白屏。"}}]}</script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <span class="brand"><span class="dot" aria-hidden="true"></span>MiniDash</span>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">CSV to Dashboard</a>
+      <a href="excel.html" aria-current="page">Excel to Dashboard</a>
+      <a href="sales-report.html">AI Sales Report</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">Excel → CSV → Dashboard</span>
+    <h1>Excel to Dashboard：<span class="hl">先另存为 CSV</span>，再一键出经营日报</h1>
+    <p class="lede">本工具不解析 .xlsx。这不是偷懒，是取舍：Excel 二进制格式在浏览器里零依赖解析的代价太高。所以它诚实地说「请另存为 CSV」，并把每一步、每个坑都写清楚——你花 20 秒，之后每天都能重复。</p>
+    <div class="hero-badges">
+      <span class="badge"><b>不支持 .xlsx</b>会明确提示</span>
+      <span class="badge"><b>支持 GBK</b>中文不乱码</span>
+      <span class="badge"><b>20 秒</b>一次另存，天天复用</span>
+    </div>
+  </section>
+
+  <div id="tool"></div>
+  <noscript><div class="alert alert-warn"><span class="a-ico">!</span><div>这个工具需要 JavaScript 在本地解析你的 CSV 并画图——所有计算都在你的浏览器里完成，没有任何服务端。请打开 JavaScript 后刷新。</div></div></noscript>
+
+  <section class="section">
+    <h2>为什么不能直接传 .xlsx</h2>
+    <p>.xlsx 不是表格，是一个 zip 压缩包：里面装着若干 XML（工作表、共享字符串表、样式、公式缓存）。要读它，就得在浏览器里解 zip、解析 XML、再处理合并单元格和日期序列号。这不是做不到，而是「零依赖单页」这个前提下的成本远高于收益——而另存为 CSV 只需要你点三下。</p>
+    <p>更实际的理由是：很多「支持 Excel」的在线工具，是把你的文件传到服务器上解析。本页没有服务器可传。所以它宁可明确告诉你「这一步得你自己做」，也不假装能读。</p>
+    <div class="note"><b>遇到 .xlsx / .xls 会怎样？</b> 页面会检测扩展名和文件头（xlsx 的 PK 魔数、xls 的 OLE 魔数），直接给出一条可读提示：「目前支持 CSV，Excel 请在表格软件里另存为 CSV」，并列出步骤——不会假装加载、不会白屏。</div>
+  </section>
+
+  <section class="section">
+    <h2>各软件怎么另存为 CSV</h2>
+    <table class="spec">
+      <thead><tr><th>软件</th><th>操作路径</th><th>注意</th></tr></thead>
+      <tbody>
+        <tr><td><b>Excel（Windows / Mac）</b></td><td>文件 → 另存为 → 类型选 <code>CSV UTF-8（逗号分隔）(*.csv)</code></td><td>别选「CSV（逗号分隔）」旧格式，中文容易乱码；弹「只保留当前工作表」点确定</td></tr>
+        <tr><td><b>WPS 表格</b></td><td>文件 → 另存为 → <code>CSV（逗号分隔，UTF-8）</code></td><td>WPS 默认可能是 GBK，本工具也能读，但 UTF-8 更稳</td></tr>
+        <tr><td><b>Numbers（Mac）</b></td><td>文件 → 导出为 → CSV</td><td>导出前先在「文件 → 高级」里勾选 UTF-8；Numbers 只导出当前选中的表</td></tr>
+        <tr><td><b>Google Sheets</b></td><td>文件 → 下载 → 逗号分隔值（.csv）</td><td>导出的是当前工作表；多表请分别导出</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>另存 CSV 之后最容易踩的五个坑</h2>
+    <table class="spec">
+      <thead><tr><th>现象</th><th>原因</th><th>怎么办</th></tr></thead>
+      <tbody>
+        <tr><td>第一行是个奇怪编号，表头跑到第二行</td><td>表格被导成了「带 ID 前缀」的格式（某些 ERP 或报表系统）</td><td>删掉第一行，让表头回到第一行再存一次</td></tr>
+        <tr><td>只导出了一个工作表</td><td>CSV 格式天生只能装一张表</td><td>把要分析的那张表单独存一个 CSV，或分别导出后合并</td></tr>
+        <tr><td>中文变乱码</td><td>文件是 GBK，但工具按 UTF-8 读</td><td>本工具会自动回退到 GBK 解码；仍乱码时用「CSV UTF-8」重存</td></tr>
+        <tr><td>金额列算出来是 0</td><td>单元格里是真文本、或带空格与单位</td><td>本工具会剥掉 ¥ / $ / 千分位；如果整列仍为 0，页面会直接报错让你换列</td></tr>
+        <tr><td>合并单元格导致的空行</td><td>Excel 合并单元格只在左上角存值</td><td>先取消合并、用「向下填充」补齐日期，再导出</td></tr>
+      </tbody>
+    </table>
+    <p>还有一条：日期列尽量用 <code>2026-11-01</code> 这种写法。Excel 里被设成「日期」格式的列另存 CSV 后通常就是这种形式；如果你看到 <code>2026/11/1</code>、<code>20261101</code>、<code>11/1/2026</code>，本工具也都认。</p>
+  </section>
+
+  <section class="section">
+    <h2>常见问题</h2>
+    <div class="faq">
+      <details><summary>能不能直接上传 .xlsx？</summary><p>不能。本工具是纯前端单页，没有后端，也不引入第三方库，所以不解析 Excel 二进制格式。检测到 Excel 文件时页面会明确告诉你「目前支持 CSV，Excel 请在表格软件里另存为 CSV」，并给出 Excel / WPS / Numbers / Google Sheets 的四条操作步骤。</p></details>
+      <details><summary>另存 CSV 会丢格式吗？</summary><p>会丢颜色、公式和图表，但你做日报只需要值——日期、渠道、订单数、金额、退款。这些数字不会丢。如果某些单元格是公式，CSV 里存的是计算结果。</p></details>
+      <details><summary>Excel 里有多张表怎么办？</summary><p>CSV 只能装一张表。把要做日报的那张表单独「另存为」，或者分别导出后用文本编辑器把数据行拼起来（保留一份表头）。</p></details>
+      <details><summary>中文乱码怎么处理？</summary><p>先试试直接上传：本工具按 UTF-8 解码，发现替换字符会自动回退到 GBK 再解一次。仍然乱码时，回 Excel 用「CSV UTF-8（逗号分隔）」重新导出。</p></details>
+      <details><summary>上传后没有任何反应？</summary><p>检查三件事：文件是不是 0 字节；第一行是不是表头；是不是至少有一列日期和一列金额。这几种情况页面都会给出具体的中文提示，不会白屏。</p></details>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>要按你自己的口径来一份？</h2>
+    <p>免费版固定算这几类指标：销售额、订单数、退款率、环比、单日异常。如果你的日报还要分渠道、算毛利、扣广告费、自动发到群里——那是定制版干的活，把一份脱敏后的 CSV 给我，我按你的口径做一个。</p>
+    <p style="font-size:13px;color:#76839e">联系方式写在 README 里（部署时改成你自己的）。免费版没有任何注册、登录、埋点。</p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>MiniDash · 纯静态页面，无后端、无追踪、无第三方脚本。</div>
+    <nav aria-label="页脚导航">
+      <a href="index.html">CSV to Dashboard</a>
+      <a href="excel.html">Excel to Dashboard</a>
+      <a href="sales-report.html">AI Sales Report</a>
+      <a href="demo.csv" download>下载 demo.csv</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/demo-data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

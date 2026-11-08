@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Sales Report Generator — 一句话结论 + 可发朋友圈的销售日报卡（免费）</title>
+<meta name="description" content="AI Sales Report Generator：上传 CSV，自动生成一句人话结论、三条异常预警、近 7 天趋势，并导出 1080×1440 的销售日报卡——能直接发朋友圈、发群、贴周报。纯浏览器计算，数据不上传，免费无水印。">
+<link rel="canonical" href="https://cococomeon.github.io/minidash-web/sales-report.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#070b16">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MiniDash">
+<meta property="og:title" content="AI Sales Report Generator — 一句话结论 + 可发朋友圈的日报卡">
+<meta property="og:description" content="AI Sales Report Generator：上传 CSV，自动生成一句人话结论、三条异常预警、近 7 天趋势，并导出 1080×1440 的销售日报卡——能直接发朋友圈、发群、贴周报。纯浏览器计算，数据不上传，免费无水印。">
+<meta property="og:url" content="https://cococomeon.github.io/minidash-web/sales-report.html">
+<meta property="og:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1440">
+<meta property="og:image:alt" content="MiniDash 生成的经营日报卡示例：本周销售额、订单数、退款率、单日最高退款率与近 7 天柱状图">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Sales Report Generator — 一句话结论 + 可发朋友圈的日报卡">
+<meta name="twitter:description" content="AI Sales Report Generator：上传 CSV，自动生成一句人话结论、三条异常预警、近 7 天趋势，并导出 1080×1440 的销售日报卡——能直接发朋友圈、发群、贴周报。纯浏览器计算，数据不上传，免费无水印。">
+<meta name="twitter:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1224'/%3E%3Crect x='14' y='34' width='8' height='16' rx='3' fill='%237c9cff'/%3E%3Crect x='28' y='24' width='8' height='26' rx='3' fill='%235eead4'/%3E%3Crect x='42' y='16' width='8' height='34' rx='3' fill='%237c9cff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MiniDash — AI Sales Report Generator","applicationCategory":"BusinessApplication","applicationSubCategory":"Sales Analytics","operatingSystem":"Any modern browser (Chrome, Safari, Firefox, Edge)","url":"https://cococomeon.github.io/minidash-web/sales-report.html","description":"把销售 CSV 变成一句话结论、异常预警和可分享的 1080×1440 日报卡。适合电商运营、独立开发者、小团队周报。","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"featureList":["CSV 上传后自动识别日期 / 渠道 / 订单数 / 销售额 / 退款额列","生成本周销售额、订单数、退款率、单日最高退款率、环比","退款率 5% / 单日 10% / 环比 -30% 三条异常预警","导出 1080×1440 PNG 分享卡片","一键复制文字版日报","全部计算在浏览器本地完成，数据不上传"],"screenshot":"https://cococomeon.github.io/minidash-web/assets/preview.png","image":"https://cococomeon.github.io/minidash-web/assets/preview.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"结论真的是「AI」写的吗？","acceptedAnswer":{"@type":"Answer","text":"结论由确定性规则生成，不是大模型。这样做的原因是：日报每天口径必须一致、数字必须算对，而且绝不能把你的销售数据发给任何第三方。如果你要的是更自由的叙述（比如结合行业背景写一段分析），那属于定制版。"}},{"@type":"Question","name":"卡片能改成正方形或横版吗？","acceptedAnswer":{"@type":"Answer","text":"免费版固定 1080×1440 竖版。要换尺寸、换配色、加自己的 logo，属于定制。"}},{"@type":"Question","name":"能把卡片自动发到群里吗？","acceptedAnswer":{"@type":"Answer","text":"不能，纯静态页面没有任何发送能力。你能做的是：点「下载 PNG」，然后自己拖进群里。要自动化（定时抓数据 + 定时发群）属于定制版的范围。"}},{"@type":"Question","name":"有 AI 生成的文字，那我的数据会被用来训练吗？","acceptedAnswer":{"@type":"Answer","text":"不会，也不可能有——你的文件从来没有离开过浏览器。页面没有后端接口，没有第三方脚本，断网也能跑。"}},{"@type":"Question","name":"复制出来的文字日报长什么样？","acceptedAnswer":{"@type":"Answer","text":"一段纯文本：标题带统计区间，然后是本周销售额（含环比）、订单数（含客单价）、退款率、单日最高退款率、一句话结论、异常提示列表、每天的销售额明细，最后一行注明「数据在你的浏览器里计算，全程未上传服务器」。直接粘进微信、飞书、Slack 都不会乱码。"}}]}</script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <span class="brand"><span class="dot" aria-hidden="true"></span>MiniDash</span>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">CSV to Dashboard</a>
+      <a href="excel.html">Excel to Dashboard</a>
+      <a href="sales-report.html" aria-current="page">AI Sales Report</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">一句话结论 + 一张卡</span>
+    <h1>AI Sales Report Generator：<span class="hl">一句人话结论</span> + 一张能发朋友圈的日报卡</h1>
+    <p class="lede">老板不想看 90 行数字。他会问「这周怎么样」。这个页面把 CSV 变成一句话结论、三条预警、一张 1080×1440 的卡片——你复制粘贴，或者直接把图甩进群里。</p>
+    <div class="hero-badges">
+      <span class="badge"><b>一句话结论</b>不用自己组织语言</span>
+      <span class="badge"><b>1080×1440</b>竖版卡片直接发</span>
+      <span class="badge"><b>免费</b>无水印</span>
+    </div>
+  </section>
+
+  <div id="tool"></div>
+  <noscript><div class="alert alert-warn"><span class="a-ico">!</span><div>这个工具需要 JavaScript 在本地解析你的 CSV 并画图——所有计算都在你的浏览器里完成，没有任何服务端。请打开 JavaScript 后刷新。</div></div></noscript>
+
+  <section class="section">
+    <h2>「一句话结论」是怎么写出来的</h2>
+    <p>不是随便夸你一句。结论由同一套确定性规则拼出来，三段式：<b>规模</b>（本周销售额）＋<b>趋势</b>（环比涨跌幅）＋<b>风险</b>（退款率与单日异常的判断）。举几个它真的会说出来的句子：</p>
+    <table class="spec">
+      <thead><tr><th>数据情况</th><th>它会写的结论</th></tr></thead>
+      <tbody>
+        <tr><td>销售涨、退款率 3%</td><td>近 7 天销售额 ¥57,000，环比 +6.2%，退款率 3.9% 在 5% 健康线以内，节奏稳定。</td></tr>
+        <tr><td>退款率 7%</td><td>近 7 天销售额 ¥42,100，环比 +2.0%，但退款率 7.1% 已经超过 5% 健康线，先查退款来源再扩张投放。</td></tr>
+        <tr><td>某天退款率 14%、整体正常</td><td>近 7 天销售额 ¥38,900，环比 +1.4%，整体退款率 3.8% 还算正常，但 10-29 单日冲到 14.2%，建议核对那天发生了什么。</td></tr>
+        <tr><td>环比跌 41%</td><td>近 7 天销售额 ¥19,400，环比 −41.0%，跌幅已经超过 30% 警戒线，先确认是渠道断流还是数据缺失。</td></tr>
+      </tbody>
+    </table>
+    <p>为什么用规则而不是调模型？因为日报要的是「每天口径一致」和「算得对」。规则版不会今天说涨、明天说跌，也不会有任何数据离开你的浏览器。</p>
+  </section>
+
+  <section class="section">
+    <h2>卡片上有什么</h2>
+    <table class="spec">
+      <thead><tr><th>区域</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>顶部</td><td>「经营日报」标题 + 统计区间（例：2026-10-26 → 2026-11-01 · 最近 7 天）</td></tr>
+        <tr><td>四宫格</td><td>本周销售额（含环比）、订单数（含客单价）、退款率、单日最高退款率</td></tr>
+        <tr><td>中部</td><td>近 7 天销售额柱状图，最高那天高亮成青色</td></tr>
+        <tr><td>结论条</td><td>一句话结论，青色描边</td></tr>
+        <tr><td>异常提示</td><td>最多两条最要紧的预警，带颜色圆点</td></tr>
+        <tr><td>页脚</td><td>「数据在你的浏览器里计算，全程未上传服务器」</td></tr>
+      </tbody>
+    </table>
+    <p>尺寸固定 1080×1440（3:4 竖版），手机上竖着看刚好占满一屏，丢进微信群不会被裁成怪比例。卡片是用 SVG 图元画的再转成 PNG，没有外部字体、没有外链图片，所以导出永远是完整的。</p>
+    <h3>什么时候该用它</h3>
+    <table class="spec">
+      <tbody>
+        <tr><td>电商运营</td><td>每天早上把昨天的店铺报表存成 CSV，出一张卡发到工作群</td></tr>
+        <tr><td>独立开发者 / 小团队</td><td>把 Stripe / Gumroad 导出的订单 CSV 变成一张图，贴进周报</td></tr>
+        <tr><td>投手 / 增长</td><td>盯退款率和单日异常，掉超过 30% 时当天就能发现</td></tr>
+        <tr><td>代运营 / 服务商</td><td>给客户出一张固定格式的日报卡，省掉每天做图的时间</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>常见问题</h2>
+    <div class="faq">
+      <details><summary>结论真的是「AI」写的吗？</summary><p>结论由确定性规则生成，不是大模型。这样做的原因是：日报每天口径必须一致、数字必须算对，而且绝不能把你的销售数据发给任何第三方。如果你要的是更自由的叙述（比如结合行业背景写一段分析），那属于定制版。</p></details>
+      <details><summary>卡片能改成正方形或横版吗？</summary><p>免费版固定 1080×1440 竖版。要换尺寸、换配色、加自己的 logo，属于定制。</p></details>
+      <details><summary>能把卡片自动发到群里吗？</summary><p>不能，纯静态页面没有任何发送能力。你能做的是：点「下载 PNG」，然后自己拖进群里。要自动化（定时抓数据 + 定时发群）属于定制版的范围。</p></details>
+      <details><summary>有 AI 生成的文字，那我的数据会被用来训练吗？</summary><p>不会，也不可能有——你的文件从来没有离开过浏览器。页面没有后端接口，没有第三方脚本，断网也能跑。</p></details>
+      <details><summary>复制出来的文字日报长什么样？</summary><p>一段纯文本：标题带统计区间，然后是本周销售额（含环比）、订单数（含客单价）、退款率、单日最高退款率、一句话结论、异常提示列表、每天的销售额明细，最后一行注明「数据在你的浏览器里计算，全程未上传服务器」。直接粘进微信、飞书、Slack 都不会乱码。</p></details>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>要按你自己的口径来一份？</h2>
+    <p>免费版固定算这几类指标：销售额、订单数、退款率、环比、单日异常。如果你的日报还要分渠道、算毛利、扣广告费、自动发到群里——那是定制版干的活，把一份脱敏后的 CSV 给我，我按你的口径做一个。</p>
+    <p style="font-size:13px;color:#76839e">联系方式写在 README 里（部署时改成你自己的）。免费版没有任何注册、登录、埋点。</p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>MiniDash · 纯静态页面，无后端、无追踪、无第三方脚本。</div>
+    <nav aria-label="页脚导航">
+      <a href="index.html">CSV to Dashboard</a>
+      <a href="excel.html">Excel to Dashboard</a>
+      <a href="sales-report.html">AI Sales Report</a>
+      <a href="demo.csv" download>下载 demo.csv</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/demo-data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV to Dashboard — 免费 CSV 转经营日报卡（数据不上传、纯浏览器）</title>
+<meta name="description" content="上传 CSV，3 秒生成经营日报卡：本周销售额、订单数、退款率、单日最高退款率、环比 + 近 7 天柱状图，一键下载 1080×1440 PNG 或复制文字日报。零注册、零后端，数据不上传，全部在你的浏览器里计算。">
+<link rel="canonical" href="https://cococomeon.github.io/minidash-web/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#070b16">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MiniDash">
+<meta property="og:title" content="CSV to Dashboard — 免费 CSV 转经营日报卡">
+<meta property="og:description" content="上传 CSV，3 秒生成经营日报卡：本周销售额、订单数、退款率、单日最高退款率、环比 + 近 7 天柱状图，一键下载 1080×1440 PNG 或复制文字日报。零注册、零后端，数据不上传，全部在你的浏览器里计算。">
+<meta property="og:url" content="https://cococomeon.github.io/minidash-web/">
+<meta property="og:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1440">
+<meta property="og:image:alt" content="MiniDash 生成的经营日报卡示例：本周销售额、订单数、退款率、单日最高退款率与近 7 天柱状图">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSV to Dashboard — 免费 CSV 转经营日报卡">
+<meta name="twitter:description" content="上传 CSV，3 秒生成经营日报卡：本周销售额、订单数、退款率、单日最高退款率、环比 + 近 7 天柱状图，一键下载 1080×1440 PNG 或复制文字日报。零注册、零后端，数据不上传，全部在你的浏览器里计算。">
+<meta name="twitter:image" content="https://cococomeon.github.io/minidash-web/assets/preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1224'/%3E%3Crect x='14' y='34' width='8' height='16' rx='3' fill='%237c9cff'/%3E%3Crect x='28' y='24' width='8' height='26' rx='3' fill='%235eead4'/%3E%3Crect x='42' y='16' width='8' height='34' rx='3' fill='%237c9cff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MiniDash — CSV to Dashboard","applicationCategory":"BusinessApplication","applicationSubCategory":"Sales Analytics","operatingSystem":"Any modern browser (Chrome, Safari, Firefox, Edge)","url":"https://cococomeon.github.io/minidash-web/","description":"把 CSV 销售明细一键转成经营日报卡：KPI、异常预警、近 7 天柱状图，可导出 PNG 与文字日报。纯前端、不上传数据。","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"featureList":["CSV 上传后自动识别日期 / 渠道 / 订单数 / 销售额 / 退款额列","生成本周销售额、订单数、退款率、单日最高退款率、环比","退款率 5% / 单日 10% / 环比 -30% 三条异常预警","导出 1080×1440 PNG 分享卡片","一键复制文字版日报","全部计算在浏览器本地完成，数据不上传"],"screenshot":"https://cococomeon.github.io/minidash-web/assets/preview.png","image":"https://cococomeon.github.io/minidash-web/assets/preview.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"数据真的不会上传吗？","acceptedAnswer":{"@type":"Answer","text":"真的。页面是纯静态 HTML + CSS + JS，没有任何后端接口、没有第三方统计脚本、没有 CDN。你可以打开浏览器开发者工具的 Network 面板，上传文件后不会出现新的请求。"}},{"@type":"Question","name":"支持 Excel（.xlsx）吗？","acceptedAnswer":{"@type":"Answer","text":"目前不支持，只支持 CSV。Excel 的 .xlsx 是一个 zip 压缩包，要在浏览器里零依赖解开并解析 XML 的成本很高，所以本工具选择不假装支持：检测到 Excel 文件会直接告诉你「请另存为 CSV」，并给出步骤。详见 excel.html。"}},{"@type":"Question","name":"CSV 需要什么格式？","acceptedAnswer":{"@type":"Answer","text":"第一行是表头，之后每行一条记录，至少要有「日期」和「销售额」两类列。逗号 / 分号 / Tab / 竖线分隔都能自动识别，带 BOM 的 UTF-8、GBK、CRLF 换行也都能读。"}},{"@type":"Question","name":"导出的 PNG 能直接用吗？","acceptedAnswer":{"@type":"Answer","text":"能。PNG 固定 1080×1440（竖版 3:4），适合微信、朋友圈、小红书和截图贴进周报。卡片只画了文字、矩形和渐变，没有外部字体和图片，导出不会缺图。"}},{"@type":"Question","name":"会保存我的数据吗？","acceptedAnswer":{"@type":"Answer","text":"不会。没有登录、没有数据库、没有 localStorage 缓存业务数据。刷新页面即清空。"}},{"@type":"Question","name":"能算利润、广告费、分渠道吗？","acceptedAnswer":{"@type":"Answer","text":"免费版不算。它只做销售额 / 订单 / 退款率 / 环比 / 单日异常这几类通用指标。要按自己的口径做（含毛利、扣广告费、分渠道拆解、自动发群），那属于定制版。"}}]}</script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <span class="brand"><span class="dot" aria-hidden="true"></span>MiniDash</span>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html" aria-current="page">CSV to Dashboard</a>
+      <a href="excel.html">Excel to Dashboard</a>
+      <a href="sales-report.html">AI Sales Report</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">CSV → Dashboard，零注册</span>
+    <h1>CSV to Dashboard：<span class="hl">上传一份 CSV</span>，立刻拿到一张经营日报卡</h1>
+    <p class="lede">不用装 BI、不用连数据库、不用注册账号。拖进一个 CSV，页面当场算出本周销售额、订单数、退款率、环比和异常，再给你一张能直接发群的 1080×1440 卡片。</p>
+    <div class="hero-badges">
+      <span class="badge"><b>零后端</b>数据不出浏览器</span>
+      <span class="badge"><b>零依赖</b>单页静态站</span>
+      <span class="badge"><b>免费</b>无水印无注册</span>
+    </div>
+  </section>
+
+  <div id="tool"></div>
+  <noscript><div class="alert alert-warn"><span class="a-ico">!</span><div>这个工具需要 JavaScript 在本地解析你的 CSV 并画图——所有计算都在你的浏览器里完成，没有任何服务端。请打开 JavaScript 后刷新。</div></div></noscript>
+
+  <section class="section">
+    <h2>三分钟走完的路</h2>
+    <table class="spec">
+      <thead><tr><th>步骤</th><th>你要做的</th><th>页面会做什么</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>拖进 CSV，或点「用示例数据试试」</td><td>自适应逗号 / 分号 / Tab / 竖线分隔符，吃掉 BOM 和 CRLF，正确处理引号里的逗号</td></tr>
+        <tr><td>2</td><td>看一眼列映射，不对就手动改</td><td>自动认出日期 / 渠道 / 订单数 / 销售额 / 退款额（含中英文别名），认错可以下拉纠正</td></tr>
+        <tr><td>3</td><td>点「下载 PNG 卡片」或「复制文字日报」</td><td>在浏览器里把卡片画进 canvas，导出 1080×1440 PNG；文字版直接进剪贴板</td></tr>
+      </tbody>
+    </table>
+    <p>整条链路没有任何网络请求：文件通过浏览器的 FileReader 读进内存，计算用 JavaScript 完成，图片用 canvas 的 <code>toBlob</code> 生成。你把浏览器关掉，数据就没了。</p>
+  </section>
+
+  <section class="section">
+    <h2>它到底算哪几个数</h2>
+    <p>免费版固定这五类指标，口径写在下面，不玩模糊：</p>
+    <table class="spec">
+      <thead><tr><th>指标</th><th>口径</th></tr></thead>
+      <tbody>
+        <tr><td><b>本周销售额</b></td><td>以数据里最后一天为终点，往前取 7 个自然日，销售额求和（缺失的日子按 0 计）</td></tr>
+        <tr><td><b>订单数</b></td><td>同一 7 天窗口内的订单数求和；客单价 = 销售额 / 订单数</td></tr>
+        <tr><td><b>退款率</b></td><td>窗口内退款额合计 / 销售额合计</td></tr>
+        <tr><td><b>单日最高退款率</b></td><td>窗口内每一天单独算 退款额 / 当天销售额，取最大值并标出是哪一天</td></tr>
+        <tr><td><b>环比</b></td><td>本窗口销售额 vs 紧邻的前一个 7 天窗口销售额</td></tr>
+      </tbody>
+    </table>
+    <h3>三条预警线</h3>
+    <table class="spec">
+      <thead><tr><th>触发条件</th><th>你会看到</th></tr></thead>
+      <tbody>
+        <tr><td>7 天退款率 &gt; 5%</td><td>红色警报，附退款额与销售额</td></tr>
+        <tr><td>某单日退款率 &gt; 10%</td><td>红色警报，点名是哪一天，提醒核对退款明细</td></tr>
+        <tr><td>销售额环比跌幅 &gt; 30%</td><td>红色警报，附上期金额</td></tr>
+      </tbody>
+    </table>
+    <p>三条都没触发时，页面会明确告诉你「指标在健康区间」，而不是空着让你自己猜。</p>
+  </section>
+
+  <section class="section">
+    <h2>列名不用改，它自己认</h2>
+    <p>表头忽略大小写、空格、下划线和括号，认这些写法（认不出会让你手动选，不会静默算错）：</p>
+    <table class="spec">
+      <thead><tr><th>角色</th><th>能认的表头</th><th>必需</th></tr></thead>
+      <tbody>
+        <tr><td>日期</td><td>date / day / order_date / dt / 日期 / 交易日期 / 下单日期 / 时间</td><td>是</td></tr>
+        <tr><td>销售额</td><td>revenue / sales / amount / gmv / 销售额 / 金额 / 营收 / 收入 / 成交额</td><td>是</td></tr>
+        <tr><td>订单数</td><td>orders / order / order_count / 订单数 / 订单量 / 单量 / 销量</td><td>否</td></tr>
+        <tr><td>退款额</td><td>refunds / refund / refund_amount / 退款额 / 退款金额 / 退款</td><td>否</td></tr>
+        <tr><td>渠道</td><td>channel / source / medium / platform / 渠道 / 平台 / 来源 / 店铺</td><td>否</td></tr>
+      </tbody>
+    </table>
+    <p>金额列能吃掉 <code>¥1,234.56</code>、<code>$1,234</code>、<code>1.234,56</code>、<code>(1,234)</code> 这些写法；日期能认 <code>2026-11-01</code>、<code>2026/11/01</code>、<code>2026年11月1日</code>、<code>20261101</code>、<code>11/01/2026</code>。</p>
+  </section>
+
+  <section class="section">
+    <h2>常见问题</h2>
+    <div class="faq">
+      <details><summary>数据真的不会上传吗？</summary><p>真的。页面是纯静态 HTML + CSS + JS，没有任何后端接口、没有第三方统计脚本、没有 CDN。你可以打开浏览器开发者工具的 Network 面板，上传文件后不会出现新的请求。</p></details>
+      <details><summary>支持 Excel（.xlsx）吗？</summary><p>目前不支持，只支持 CSV。Excel 的 .xlsx 是一个 zip 压缩包，要在浏览器里零依赖解开并解析 XML 的成本很高，所以本工具选择不假装支持：检测到 Excel 文件会直接告诉你「请另存为 CSV」，并给出步骤。详见 excel.html。</p></details>
+      <details><summary>CSV 需要什么格式？</summary><p>第一行是表头，之后每行一条记录，至少要有「日期」和「销售额」两类列。逗号 / 分号 / Tab / 竖线分隔都能自动识别，带 BOM 的 UTF-8、GBK、CRLF 换行也都能读。</p></details>
+      <details><summary>导出的 PNG 能直接用吗？</summary><p>能。PNG 固定 1080×1440（竖版 3:4），适合微信、朋友圈、小红书和截图贴进周报。卡片只画了文字、矩形和渐变，没有外部字体和图片，导出不会缺图。</p></details>
+      <details><summary>会保存我的数据吗？</summary><p>不会。没有登录、没有数据库、没有 localStorage 缓存业务数据。刷新页面即清空。</p></details>
+      <details><summary>能算利润、广告费、分渠道吗？</summary><p>免费版不算。它只做销售额 / 订单 / 退款率 / 环比 / 单日异常这几类通用指标。要按自己的口径做（含毛利、扣广告费、分渠道拆解、自动发群），那属于定制版。</p></details>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>要按你自己的口径来一份？</h2>
+    <p>免费版固定算这几类指标：销售额、订单数、退款率、环比、单日异常。如果你的日报还要分渠道、算毛利、扣广告费、自动发到群里——那是定制版干的活，把一份脱敏后的 CSV 给我，我按你的口径做一个。</p>
+    <p style="font-size:13px;color:#76839e">联系方式写在 README 里（部署时改成你自己的）。免费版没有任何注册、登录、埋点。</p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>MiniDash · 纯静态页面，无后端、无追踪、无第三方脚本。</div>
+    <nav aria-label="页脚导航">
+      <a href="index.html">CSV to Dashboard</a>
+      <a href="excel.html">Excel to Dashboard</a>
+      <a href="sales-report.html">AI Sales Report</a>
+      <a href="demo.csv" download>下载 demo.csv</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/demo-data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

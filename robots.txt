@@ -1,0 +1,8 @@
+# MiniDash — 纯静态工具站
+User-agent: *
+Allow: /
+
+# 没有管理后台、没有接口、没有需要藏起来的目录
+Disallow: /README.md
+
+Sitemap: https://cococomeon.github.io/minidash-web/sitemap.xml
